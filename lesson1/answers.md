@@ -11,9 +11,13 @@
 ## Демонстрация работы уровней изоляции в СУБД Postgres
 ### Установка PostgreSQL, запуск приложения psql
 1. зайти удаленным ssh (первая сессия), не забывайте про ssh-add
-2. поставить PostgreSQL
-3. зайти вторым ssh (вторая сессия)
-4. запустить везде psql из под пользователя postgres
+При подключении не потребовалось использовать УЗ Ubuntu, подключение с Windows-машины прошло под своей УЗ.
+![Первая сессия через SSH](/images/img4.jpg "Первая сессия через SSH")
+3. поставить PostgreSQL
+![Результат установки Postgres 15](/images/img5.jpg "Результат установки Postgres 15")
+5. зайти вторым ssh (вторая сессия)
+![Вторая сессия через SSH](/images/img6.jpg "Вторая сессия через SSH")
+7. запустить везде psql из под пользователя postgres
 ### Поведение psql с отключенной опцие auto commit
 5. выключить auto commit
 6. сделать в первой сессии новую таблицу и наполнить ее данными create table persons(id serial, first_name text, second_name text); insert into persons(first_name, second_name) values('ivan', 'ivanov'); insert into persons(first_name, second_name) values('petr', 'petrov'); commit;
