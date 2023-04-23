@@ -56,11 +56,18 @@ sudo -u postgres psql
 
 ### Поведение psql с отключенной опцие auto commit
 5. выключить auto commit
+
+Отключаем AUTOCOMMIT в обеих сессиях, предварительно проверив текущее состояние:
+
+![Значение по умолчанию AUTOCOMMIT](/images/img10.jpg "Значение по умолчанию AUTOCOMMIT")
+
+![Отключение AUTOCOMMIT](/images/img11.jpg "Отключение AUTOCOMMIT")
+
 6. сделать в первой сессии новую таблицу и наполнить ее данными create table persons(id serial, first_name text, second_name text); insert into persons(first_name, second_name) values('ivan', 'ivanov'); insert into persons(first_name, second_name) values('petr', 'petrov'); commit;
-7. посмотреть текущий уровень изоляции: show transaction isolation level
-8. начать новую транзакцию в обоих сессиях с дефолтным (не меняя) уровнем изоляции
-9. в первой сессии добавить новую запись insert into persons(first_name, second_name) values('sergey', 'sergeev');
-10. сделать select * from persons во второй сессии
+8. посмотреть текущий уровень изоляции: show transaction isolation level
+9. начать новую транзакцию в обоих сессиях с дефолтным (не меняя) уровнем изоляции
+10. в первой сессии добавить новую запись insert into persons(first_name, second_name) values('sergey', 'sergeev');
+11. сделать select * from persons во второй сессии
 видите ли вы новую запись и если да то почему?
 11. завершить первую транзакцию - commit;
 12. сделать select * from persons во второй сессии
