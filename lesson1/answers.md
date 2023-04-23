@@ -64,11 +64,44 @@ sudo -u postgres psql
 ![Отключение AUTOCOMMIT](/images/img11.jpg "Отключение AUTOCOMMIT")
 
 6. сделать в первой сессии новую таблицу и наполнить ее данными create table persons(id serial, first_name text, second_name text); insert into persons(first_name, second_name) values('ivan', 'ivanov'); insert into persons(first_name, second_name) values('petr', 'petrov'); commit;
-8. посмотреть текущий уровень изоляции: show transaction isolation level
-9. начать новую транзакцию в обоих сессиях с дефолтным (не меняя) уровнем изоляции
+
+Выполнены dml:
+```sql
+create table persons(id serial, first_name text, second_name text); 
+insert into persons(first_name, second_name) values('ivan', 'ivanov'); 
+insert into persons(first_name, second_name) values('petr', 'petrov'); 
+commit;
+```
+![Вставка данных и фиксация](/images/img12.jpg "Вставка данных и фиксация")
+
+7. посмотреть текущий уровень изоляции: show transaction isolation level
+
+```sql
+show transaction isolation level;
+```
+![Текущий уровень изоляции](/images/img13.jpg "Текущий уровень изоляции")
+
+8. начать новую транзакцию в обоих сессиях с дефолтным (не меняя) уровнем изоляции
+9. 
+```sql
+begin;
+```
 10. в первой сессии добавить новую запись insert into persons(first_name, second_name) values('sergey', 'sergeev');
+
+```sql
+insert into persons(first_name, second_name) values('sergey', 'sergeev');
+```
+
+![Вставка данных в первой сессии](/images/img14.jpg "Вставка данных в первой сессии")
+
 11. сделать select * from persons во второй сессии
 видите ли вы новую запись и если да то почему?
+
+```sql
+select * from persons;
+```
+![Выборка данных во второй сессии](/images/img15.jpg "Выборка данных во второй сессии")
+
 11. завершить первую транзакцию - commit;
 12. сделать select * from persons во второй сессии
 видите ли вы новую запись и если да то почему?
