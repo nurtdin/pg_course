@@ -25,7 +25,7 @@
 
 2. поставить PostgreSQL
 Установка выполнена с помощью команды:
-```
+```console
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && wget --quiet -0 - hhtps://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - && sudo apt-get update  && sudo apt-get -y install postgresql-15
 ```
 ![Результат установки Postgres 15](/images/img5.jpg "Результат установки Postgres 15")
@@ -35,6 +35,17 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release cs)-
 ![Вторая сессия через SSH](/images/img6.jpg "Вторая сессия через SSH")
 
 4. запустить везде psql из под пользователя postgres
+Запуск осуществлен с помощью
+```console
+cd /etc/postgresql
+sudo -u postgres psql
+```
+Первая сессия psql:
+![Первая сессия](/images/img7.jpg "Первая сессия")
+Вторая сессия psql:
+![Вторая сессия](/images/img8.jpg "Вторая сессия")
+
+
 ### Поведение psql с отключенной опцие auto commit
 5. выключить auto commit
 6. сделать в первой сессии новую таблицу и наполнить ее данными create table persons(id serial, first_name text, second_name text); insert into persons(first_name, second_name) values('ivan', 'ivanov'); insert into persons(first_name, second_name) values('petr', 'petrov'); commit;
