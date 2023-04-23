@@ -2,10 +2,18 @@
 
 ## Виртуальная машина в Яндекс.Облако
 1. создать новый проект в Google Cloud Platform, Яндекс облако или на любых ВМ, докере
+
+Выбрано Яндекс.Облако, в котором создан новый проект nurtdincloud:
 ![Новый проект в Яндекс.Облако](/images/img1.jpg "Проект в Яндекс.Облако")
-3. далее создать инстанс виртуальной машины с дефолтными параметрами
+
+2. далее создать инстанс виртуальной машины с дефолтными параметрами
+
+Создана новая виртуальная машина ppstgresdb с минимальными характеристиками:
 ![Экземпляр виртуальной машины в Яндекс.Облако](/images/img2.jpg "Экземпляр ВМ в Яндекс.Облако")
-5. добавить свой ssh ключ в metadata ВМ
+
+3. добавить свой ssh ключ в metadata ВМ
+
+В Windows 10 с помощью ssh-keygen создана пара публичный/приватный ключи, публичный ключ укзан при создании виртутальной машины:
 ![Публичный ключ для виртуальной машины в Яндекс.Облако](/images/img3.jpg "Публичный ключ")
 
 ## Демонстрация работы уровней изоляции в СУБД Postgres
@@ -14,11 +22,19 @@
 
 При подключении не потребовалось использовать УЗ Ubuntu, подключение с Windows-машины прошло под своей УЗ.
 ![Первая сессия через SSH](/images/img4.jpg "Первая сессия через SSH")
-3. поставить PostgreSQL
+
+2. поставить PostgreSQL
+Установка выполнена с помощью команды:
+```
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && wget --quiet -0 - hhtps://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - && sudo apt-get update  && sudo apt-get -y install postgresql-15
+```
 ![Результат установки Postgres 15](/images/img5.jpg "Результат установки Postgres 15")
-5. зайти вторым ssh (вторая сессия)
+
+3. зайти вторым ssh (вторая сессия)
+
 ![Вторая сессия через SSH](/images/img6.jpg "Вторая сессия через SSH")
-7. запустить везде psql из под пользователя postgres
+
+4. запустить везде psql из под пользователя postgres
 ### Поведение psql с отключенной опцие auto commit
 5. выключить auto commit
 6. сделать в первой сессии новую таблицу и наполнить ее данными create table persons(id serial, first_name text, second_name text); insert into persons(first_name, second_name) values('ivan', 'ivanov'); insert into persons(first_name, second_name) values('petr', 'petrov'); commit;
