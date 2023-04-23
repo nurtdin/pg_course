@@ -82,11 +82,11 @@ show transaction isolation level;
 ![Текущий уровень изоляции](/images/img13.jpg "Текущий уровень изоляции")
 
 8. начать новую транзакцию в обоих сессиях с дефолтным (не меняя) уровнем изоляции
-9. 
+
 ```sql
 begin;
 ```
-10. в первой сессии добавить новую запись insert into persons(first_name, second_name) values('sergey', 'sergeev');
+9. в первой сессии добавить новую запись insert into persons(first_name, second_name) values('sergey', 'sergeev');
 
 ```sql
 insert into persons(first_name, second_name) values('sergey', 'sergeev');
@@ -94,7 +94,7 @@ insert into persons(first_name, second_name) values('sergey', 'sergeev');
 
 ![Вставка данных в первой сессии](/images/img14.jpg "Вставка данных в первой сессии")
 
-11. сделать select * from persons во второй сессии
+10. сделать select * from persons во второй сессии
 видите ли вы новую запись и если да то почему?
 
 ```sql
@@ -102,10 +102,28 @@ select * from persons;
 ```
 ![Выборка данных во второй сессии](/images/img15.jpg "Выборка данных во второй сессии")
 
+Новая запись, вставленная в первой сессии, не видна, т.к. при уровне изоляции "read committed" предотвращается чтение "грязных" данных, т.е. данных, которые были изменены, но не зафиксированы другими транзакциями. В данном случае в первой сессии транзакция изменила данны (осуществила вставку), но осталась незавершенной (явно не выполнили commit).
+
 11. завершить первую транзакцию - commit;
+```sql
+commmit;
+```
+![Фиксация транзакции в первой сессии](/images/img16.jpg "Фиксация транзакции в первой сессии")
+
 12. сделать select * from persons во второй сессии
+
+```sql
+select * from persons;
+```
+
+![Выборка данных во второй сессии](/images/img17.jpg "Выборка данных во второй сессии")
+
 видите ли вы новую запись и если да то почему?
+Новая запись, вставленная в первой сессии, видна, т.к. при выполнении commit транзакция в первой сессии была завершена, измененные данные стали доступна в других сессиях.
 13. завершите транзакцию во второй сессии
+```sql
+commit;
+```
 ### Поведение Postgres с уровнем изоляции repeatable read
 14. начать новые но уже repeatable read транзации - set transaction isolation level repeatable read;
 15. в первой сессии добавить новую запись insert into persons(first_name, second_name) values('sveta', 'svetova');
